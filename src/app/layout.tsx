@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import NavBar from '../components/NavBar'
-
+import ActivePageContext from '@/context/activePageContext'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -18,10 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#EFF6FC]`}>
-        <div className='flex w-full h-[100vh] justify-between items-center gap-6 p-6'>
-         <NavBar />
-          {children}
-        </div>
+          <div className='flex w-full h-[100vh] justify-between items-center gap-6 p-6'>
+         <ActivePageContext>
+            <NavBar />
+            {children}
+         </ActivePageContext>
+          </div>
       </body>
     </html>
   )
