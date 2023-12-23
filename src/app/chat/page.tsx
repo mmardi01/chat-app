@@ -2,6 +2,7 @@
 import { useContext, useEffect } from "react";
 import { activeContext } from "@/context/activePageContext";
 import ChatLeftSide from "@/components/chat/ChatLeftSide";
+import ChatBox from "@/components/chat/ChatBox";
 
 function Chat() {
   const active = useContext(activeContext);
@@ -12,7 +13,7 @@ function Chat() {
   return (
     <div className="w-full h-full flex justify-center gap-6">
       <ChatLeftSide />
-      <div className="w-[60%] h-full bg-white rounded-[20px] shadow-[#79c6ef46] shadow-md"></div>
+      <ChatBox />
     </div>
   );
 }

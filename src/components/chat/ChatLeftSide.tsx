@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Groups from "./Groups";
+import PeopleMessages from "./PeopleMessages";
 
 function ChatLeftSide() {
 
@@ -16,7 +17,7 @@ function ChatLeftSide() {
         <input placeholder="Search" className="w-full px-20 text-2xl text-[#7C7C7C] font-normal placeholder:text-[#7C7C7C] bg-white outline-none h-full rounded-[20px] shadow-[#79c6ef46] shadow-md" type="text" />
       </div>
       <Groups />
-      <div  className="w-full bg-white h-[55%] rounded-[20px] shadow-[#79c6ef46] shadow-md"></div>
+      <PeopleMessages />
     </div>
   );
 }
