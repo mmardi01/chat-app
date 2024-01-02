@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={`${inter.className} bg-[#EFF6FC]`}>
           <div className='flex w-full h-[100vh] justify-between items-center gap-6 p-6'>
          <ActivePageContext>
-            <NavBar />
+            {/* <NavBar /> */}
             {children}
          </ActivePageContext>
           </div>

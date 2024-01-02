@@ -6,7 +6,7 @@ import { HiDotsVertical } from "react-icons/hi";
 
 function ChatBoxHeader() {
   return (
-    <div className="w-full h-[75px] border-b-2 flex items-start justify-between">
+    <div className="w-full h-[86px]  border-b-2 flex items-start justify-between">
         <div className="flex items-center gap-4">
           <Image
             className="w-14 h-14 object-cover object-center rounded-full"

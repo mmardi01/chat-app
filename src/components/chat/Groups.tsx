@@ -39,7 +39,7 @@ const Groups = () => {
                 quality={80}
                 height={50}
                 alt="me"
-              ></Image>
+              ></Image> 
               <div>
                 <h1 className="font-semibold text-xl">{group.groupName}</h1>
                 <p className=" text-lg font-light">{group.lastMessage}</p>
