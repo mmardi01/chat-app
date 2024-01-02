@@ -2,7 +2,11 @@ import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { BiCheckbox, BiCheckboxChecked } from "react-icons/bi";
 
-function Signup({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
+function Signup({
+  updateSide,
+}: {
+  updateSide: Dispatch<SetStateAction<boolean>>;
+}) {
   return (
     <div className="w-1/2 h-full flex justify-center items-center text-[#09090B]">
       <div className="flex flex-col items-center  gap-2">
@@ -30,14 +34,14 @@ function Signup({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
         <form className="flex flex-col w-[90%] gap-6">
           <div className="relative">
             <input
-            id="username"
+              id="username"
               className="bg-[#6f00ff27] pl-12 placeholder:text-[#6f00ff4b] border border-[#6E00FF] outline-none w-full h-[55px] rounded-xl"
               type="text"
               placeholder="Username"
             />
             <Image
               className="absolute top-4 left-3"
-              src={"mail.svg"}
+              src={"/username.png"}
               alt=""
               width={23}
               height={23}
@@ -45,7 +49,7 @@ function Signup({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
           </div>
           <div className="relative">
             <input
-            id="email"
+              id="email"
               className="bg-[#6f00ff27] pl-12 placeholder:text-[#6f00ff4b] border border-[#6E00FF] outline-none w-full h-[55px] rounded-xl"
               type="text"
               placeholder="Email"
@@ -60,7 +64,7 @@ function Signup({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
           </div>
           <div className="relative">
             <input
-            id="password"
+              id="password"
               className="bg-[#6f00ff27] pl-12 placeholder:text-[#6f00ff4b] border border-[#6E00FF] outline-none w-full h-[55px] rounded-xl"
               placeholder="Password"
               type="password"
@@ -75,7 +79,7 @@ function Signup({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
           </div>
           <div className="relative">
             <input
-            id="confirm"
+              id="confirm"
               className="bg-[#6f00ff27] pl-12 placeholder:text-[#6f00ff4b] border border-[#6E00FF] outline-none w-full h-[55px] rounded-xl"
               placeholder="Password"
               type="password"
@@ -92,12 +96,14 @@ function Signup({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
             Sign Up
           </button>
           <p className="text-[#71717A] self-center">
-          Already have an accoun {" "}
+            Already have an accoun?{" "}
             <button
-              onClick={(e) => { e.preventDefault(); 
-                updateSide((prev: boolean) => !prev)
+              onClick={(e) => {
+                e.preventDefault();
+                updateSide((prev: boolean) => !prev);
               }}
-              className="font-bold text-[#6f00ff]">
+              className="font-bold text-[#6f00ff]"
+            >
               Log In
             </button>
           </p>
@@ -107,4 +113,4 @@ function Signup({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
   );
 }
 
-export default Signup
+export default Signup;
