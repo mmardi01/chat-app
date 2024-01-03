@@ -10,14 +10,14 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type:'postgres',
+      type: 'postgres',
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password:'1234',
-      database:'chat',
-      entities:[User],
-      synchronize:true
+      password: '1234',
+      database: 'chat',
+      entities: [User],
+      synchronize: true,
     }),
     ConfigModule.forRoot({
       envFilePath: '.env',

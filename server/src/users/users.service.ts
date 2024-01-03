@@ -6,15 +6,14 @@ import { Request } from 'express';
 
 @Injectable()
 export class UsersService {
-
   constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
 
   async findUser(req: Request) {
     try {
       const user = this.userRepo.findOne({
         where: {
-          id: req['user'].id
-        }
+          id: req['user'].id,
+        },
       });
 
       delete (await user).password;
