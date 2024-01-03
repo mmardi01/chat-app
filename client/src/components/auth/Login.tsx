@@ -1,8 +1,12 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
-import { BiCheckbox, BiCheckboxChecked } from "react-icons/bi";
+import { GrCheckbox, GrCheckboxSelected  } from "react-icons/gr";
 
-function Login({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
+function Login({
+  updateSide,
+}: {
+  updateSide: Dispatch<SetStateAction<boolean>>;
+}) {
   return (
     <div className="w-1/2 h-full flex justify-center items-center text-[#09090B]">
       <div className="flex flex-col items-center  gap-2">
@@ -57,7 +61,7 @@ function Login({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
             />
           </div>
           <div className="flex items-center gap-2">
-            <BiCheckbox className="text-2xl text-[#6f00ff]" />
+            <GrCheckbox className="text-xl text-[#6f00ff]" />
             <p className="text-[#71717A] font-light">Remember me</p>
             <p className="ml-auto font-bold text-[#6f00ff]">Forgot Password?</p>
           </div>
@@ -65,12 +69,14 @@ function Login({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
             Log In
           </button>
           <p className="text-[#71717A] self-center">
-            Don’t have account? {" "}
+            Don’t have account?{" "}
             <button
-              onClick={(e) => { e.preventDefault(); 
-                updateSide((prev: boolean) => !prev)
+              onClick={(e) => {
+                e.preventDefault();
+                updateSide((prev: boolean) => !prev);
               }}
-              className="font-bold text-[#6f00ff]">
+              className="font-bold text-[#6f00ff]"
+            >
               Create an account
             </button>
           </p>
