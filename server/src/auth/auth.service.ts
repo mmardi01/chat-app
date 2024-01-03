@@ -30,7 +30,7 @@ export class AuthService {
         username:dto.username,
         email:dto.email,
         password:hash,
-        image:dto.image
+        image:'../images/default.webp'
       });
 
       const userCreated = await this.userRepo.save(newUser);

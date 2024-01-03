@@ -17,9 +17,6 @@ export class SignupDto {
   @IsString()
   confirmPassword:string;
   
-  @IsNotEmpty()
-  @IsString()
-  image:string;
 }
 
 export class SigninDto {
