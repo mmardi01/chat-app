@@ -30,7 +30,7 @@ function Forms() {
           className={`w-1/2 h-full flex flex-col justify-center items-center bg-[#6E00FF] absolute left-0 top-0`}
         >
            <h1 className="font-bold text-4xl">Lorem ipsum dolor</h1>
-          <Image src={"/vector.svg"} alt="vecotr" width={927} height={618} />
+          <Image priority src={"/vector.svg"} alt="vecotr" width={927} height={618} />
           <p className="font-light text-center">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             ultricies.

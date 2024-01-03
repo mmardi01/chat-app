@@ -18,11 +18,11 @@ function Login({
         </div>
         <div className="w-full flex justify-between font-[400] text-xl my-2">
           <button className="w-[180px] h-[55px] rounded-[16px] border border-[#6f00ff72] flex items-center justify-center gap-2 ">
-            <Image src={"/google.png"} alt="icon" width={20} height={20} />
+            <Image className="w-auto h-auto" src={"/google.png"} alt="icon" width={20} height={20} />
             <p>Google</p>
           </button>
           <button className="w-[180px] h-[55px] rounded-[16px] border border-[#6f00ff72] flex items-center justify-center gap-2">
-            <Image src={"/facebook.png"} alt="icon" width={24} height={24} />
+            <Image className="w-auto h-auto" src={"/facebook.png"} alt="icon" width={24} height={24} />
             <p>Facebook</p>
           </button>
         </div>
@@ -53,7 +53,7 @@ function Login({
               type="password"
             ></input>
             <Image
-              className="absolute top-4 left-3"
+              className="absolute top-4 left-3 w-auto h-auto"
               src={"pass.svg"}
               alt=""
               width={23}
