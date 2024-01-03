@@ -32,11 +32,11 @@ function Login({updateSide}: {updateSide: Dispatch<SetStateAction<boolean>>}) {
             <input
               className="bg-[#6f00ff27] pl-12 placeholder:text-[#6f00ff4b] border border-[#6E00FF] outline-none w-full h-[55px] rounded-xl"
               type="text"
-              placeholder="Email"
+              placeholder="Username"
             />
             <Image
               className="absolute top-4 left-3"
-              src={"mail.svg"}
+              src={"/username.png"}
               alt=""
               width={23}
               height={23}
