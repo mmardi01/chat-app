@@ -26,14 +26,18 @@ function Signup({
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-  
   const onSubmit = async (data: Formvalues) => {
-    console.log('hee');
+    console.log(JSON.stringify(data));
     try {
-      const res = await axios.post("api/auth/signup", data,{
-        withCredentials: true
+      const res = await fetch("http://localhost:3333/auth/signup", {
+        method:'POST',
+        credentials: 'include',
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-      console.log(res.data)
+      console.log(await res.json());
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +86,7 @@ function Signup({
         >
           <div className="relative">
             <input
+            value={'mmardi'}
               id="username"
               className={`bg-[#6f00ff27] pl-12  border ${
                 errors.username
@@ -114,6 +119,7 @@ function Signup({
           <div className="relative">
             <input
               id="email"
+              value={'mmardi@gmail.com'}
               className={`bg-[#6f00ff27] pl-12  border ${
                 errors.email
                   ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
@@ -140,6 +146,7 @@ function Signup({
           </div>
           <div className="relative">
             <input
+            value={'Sht@afsj123213'}
               id="password"
               className={`bg-[#6f00ff27] pl-12  border ${
                 errors.password
@@ -172,6 +179,7 @@ function Signup({
           <div className="relative">
             <input
               id="confirm"
+            value={'Sht@afsj123213'}
               className={`bg-[#6f00ff27] pl-12  border ${
                 errors.confirmPassword
                   ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
