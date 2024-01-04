@@ -7,7 +7,7 @@ import Image from "next/image";
 
 function Forms() {
   const [right, updatSide] = useState(true);
-
+  
   return (
     <div className="flex w-full h-full text-white">
       <Login updateSide={updatSide} />

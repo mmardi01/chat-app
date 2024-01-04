@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
 import { TfiUser } from "react-icons/tfi";
 import { CiMail } from "react-icons/ci";
 import { BsShieldSlash } from "react-icons/bs";
+import axios from "axios";
 
 type Formvalues = {
   username: string;
@@ -18,18 +18,26 @@ function Signup({
 }: {
   updateSide: Dispatch<SetStateAction<boolean>>;
 }) {
-
   const form = useForm<Formvalues>();
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
-  const [usernameError, setUsernameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-  const onSubmit = (data: Formvalues) => {
+  
+  const onSubmit = async (data: Formvalues) => {
+    console.log('hee');
+    try {
+      const res = await axios.post("api/auth/signup", data,{
+        withCredentials: true
+      });
+      console.log(res.data)
+    } catch (error) {
+      console.log(error);
+    }
   };
-
 
   return (
     <div className="w-1/2 h-full flex justify-center items-center text-[#09090B]">
@@ -75,75 +83,115 @@ function Signup({
           <div className="relative">
             <input
               id="username"
-              className={`bg-[#6f00ff27] pl-12  border ${errors.username ? 'border-[#ff2c2c] placeholder:text-[#ff2c2c]' : 'border-[#6E00FF] placeholder:text-[#6f00ff4b]'} outline-none w-full h-[55px] rounded-xl`}
+              className={`bg-[#6f00ff27] pl-12  border ${
+                errors.username
+                  ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
+                  : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
+              } outline-none w-full h-[55px] rounded-xl`}
               type="text"
               placeholder="Username"
               {...register("username", {
                 required: "this field is required",
                 maxLength: {
-                  'value':15,
-                  message:'username should be between 4-15 characters'
+                  value: 15,
+                  message: "username should be between 4-15 characters",
                 },
                 minLength: {
-                  'value':4,
-                  message:'username should be between 4-15 characters'
-                }
+                  value: 4,
+                  message: "username should be between 4-15 characters",
+                },
               })}
             />
-            <TfiUser className={`absolute top-[18px] left-4 text-xl ${errors.username ? 'text-[#ff2c2c]' : 'text-[#6f00ff4b]'}`} />
-              <p className="absolute text-sm right-1 text-[#ff2c2c]">{errors.username?.message}</p>
+            <TfiUser
+              className={`absolute top-[18px] left-4 text-xl ${
+                errors.username ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+              }`}
+            />
+            <p className="absolute text-sm right-1 text-[#ff2c2c]">
+              {errors.username?.message}
+            </p>
           </div>
           <div className="relative">
             <input
               id="email"
-              className={`bg-[#6f00ff27] pl-12  border ${errors.email ? 'border-[#ff2c2c] placeholder:text-[#ff2c2c]' : 'border-[#6E00FF] placeholder:text-[#6f00ff4b]'} outline-none w-full h-[55px] rounded-xl`}
+              className={`bg-[#6f00ff27] pl-12  border ${
+                errors.email
+                  ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
+                  : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
+              } outline-none w-full h-[55px] rounded-xl`}
               type="text"
               placeholder="Email"
               {...register("email", {
                 required: "this field is required",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "invalid email address"
-                }
+                  message: "invalid email address",
+                },
               })}
             />
-              <CiMail className={`absolute top-[16px] left-4 text-2xl ${errors.email ? 'text-[#ff2c2c]' : 'text-[#6f00ff4b]'}`} />
-              <p className="absolute text-sm right-1 text-[#ff2c2c]">{errors.email?.message}</p>
+            <CiMail
+              className={`absolute top-[16px] left-4 text-2xl ${
+                errors.email ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+              }`}
+            />
+            <p className="absolute text-sm right-1 text-[#ff2c2c]">
+              {errors.email?.message}
+            </p>
           </div>
           <div className="relative">
             <input
               id="password"
-              className={`bg-[#6f00ff27] pl-12  border ${errors.password ? 'border-[#ff2c2c] placeholder:text-[#ff2c2c]' : 'border-[#6E00FF] placeholder:text-[#6f00ff4b]'} outline-none w-full h-[55px] rounded-xl`}
+              className={`bg-[#6f00ff27] pl-12  border ${
+                errors.password
+                  ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
+                  : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
+              } outline-none w-full h-[55px] rounded-xl`}
               placeholder="Password"
               type="password"
               {...register("password", {
                 required: "this field is required",
                 pattern: {
                   value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/i,
-                  message: "invalid password"
+                  message: "invalid password",
                 },
                 minLength: {
-                  value:8,
-                  message: "invalid password"
-                }
+                  value: 8,
+                  message: "invalid password",
+                },
               })}
             ></input>
-            <BsShieldSlash className={`absolute top-[16px] left-4 text-2xl ${errors.password ? 'text-[#ff2c2c]' : 'text-[#6f00ff4b]'}`} />
-            <p className="absolute text-sm right-1 text-[#ff2c2c]">{errors.password?.message}</p>
+            <BsShieldSlash
+              className={`absolute top-[16px] left-4 text-2xl ${
+                errors.password ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+              }`}
+            />
+            <p className="absolute text-sm right-1 text-[#ff2c2c]">
+              {errors.password?.message}
+            </p>
           </div>
           <div className="relative">
             <input
               id="confirm"
-              className={`bg-[#6f00ff27] pl-12  border ${errors.confirmPassword ? 'border-[#ff2c2c] placeholder:text-[#ff2c2c]' : 'border-[#6E00FF] placeholder:text-[#6f00ff4b]'} outline-none w-full h-[55px] rounded-xl`}
+              className={`bg-[#6f00ff27] pl-12  border ${
+                errors.confirmPassword
+                  ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
+                  : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
+              } outline-none w-full h-[55px] rounded-xl`}
               placeholder="Confirm Password"
               type="password"
               {...register("confirmPassword", {
                 required: "this field is required",
               })}
             ></input>
-              <p className="absolute text-sm right-1 text-[#ff2c2c]">{errors.confirmPassword?.message}</p>
+            <p className="absolute text-sm right-1 text-[#ff2c2c]">
+              {errors.confirmPassword?.message}
+            </p>
 
-            <BsShieldSlash className={`absolute top-[16px] left-4 text-2xl ${errors.confirmPassword ? 'text-[#ff2c2c]' : 'text-[#6f00ff4b]'}`} />
+            <BsShieldSlash
+              className={`absolute top-[16px] left-4 text-2xl ${
+                errors.confirmPassword ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+              }`}
+            />
           </div>
           <button
             type="submit"
