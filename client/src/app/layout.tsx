@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import NavBar from '../components/NavBar'
 import ActivePageContext from '@/context/activePageContext'
+import { store } from '../store'
+import { Provider } from 'react-redux'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
