@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { TfiUser } from "react-icons/tfi";
 import { CiMail } from "react-icons/ci";
 import { BsShieldSlash } from "react-icons/bs";
-import axios from "axios";
 
 type Formvalues = {
   username: string;
@@ -19,7 +18,7 @@ function Signup({
   updateSide: Dispatch<SetStateAction<boolean>>;
 }) {
   const form = useForm<Formvalues>();
-  const { register, control, handleSubmit, formState } = form;
+  const { register, control, handleSubmit, formState, } = form;
   const { errors } = formState;
   const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -27,7 +26,6 @@ function Signup({
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const onSubmit = async (data: Formvalues) => {
-    console.log(JSON.stringify(data));
     try {
       const res = await fetch("http://localhost:3333/auth/signup", {
         method:'POST',

@@ -9,9 +9,7 @@ export class AuthController {
 
   @Post('signup')
   signup(@Body() dto: SignupDto, @Res({ passthrough: true }) res: Response) {
-    console.log(dto);
-    return dto;
-    // return this.authService.signup(dto, res);
+    return this.authService.signup(dto, res);
   }
 
   @Post('signin')
