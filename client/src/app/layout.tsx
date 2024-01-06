@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "../components/NavBar";
 import ActivePageContext from "@/context/activePageContext";
-import { store } from "../store";
-import { Provider } from "react-redux";
+import StoreProvider from "@/store/StoreProvider";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,10 +23,10 @@ export default function RootLayout({
       <body className={`${inter.className} bg-[#EFF6FC]`}>
         <div className="flex w-full h-[100vh] justify-between items-center gap-6 p-6">
           <ActivePageContext>
-            <Provider store={store}>
+            <StoreProvider>
               {/* <NavBar /> */}
               {children}
-            </Provider>
+            </StoreProvider>
           </ActivePageContext>
         </div>
       </body>

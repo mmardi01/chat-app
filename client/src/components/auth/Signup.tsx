@@ -6,6 +6,7 @@ import { CiMail } from "react-icons/ci";
 import { BsShieldSlash } from "react-icons/bs";
 import {  useDispatch } from "react-redux";
 import { login } from "@/features/user/userSlice";
+import { useSelector } from "react-redux";
 
 type Formvalues = {
   username: string;
@@ -28,7 +29,7 @@ function Signup({
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const dispatch = useDispatch();
 
-
+  
   const onSubmit = async (data: Formvalues) => {
     try {
       const res = await fetch("http://localhost:3333/auth/signup", {
