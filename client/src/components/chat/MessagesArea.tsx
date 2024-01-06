@@ -67,17 +67,17 @@ const MessagesArea = () => {
   return (
     <div className="w-full h-full px-4 overflow-y-scroll scroll-hidden py-2 flex-col-reverse flex">
       {
-        Messages.map(message => (
+        Messages.map((message, index) => (
           message.senderId === 'mmardi' ?
             (
-              <div className='bg-[#E7E7E7] max-w-[50%]  w-fit h-fit px-6 py-2 rounded-[16px] font-[400] mt-2 relative'>
+              <div key={index} className='bg-[#E7E7E7] max-w-[50%]  w-fit h-fit px-6 py-2 rounded-[16px] font-[400] mt-2 relative'>
                 <p className='text-wrap  w-fit '>{message.content}</p>
                 <div className='w-3 h-3 bg-[#E7E7E7] absolute rounded-full -left-3'></div>
               </div>
             ) 
             :
             ( 
-              <div className='bg-[#6E00FF] break-normal text-white w-fit px-6 py-2 rounded-[16px] font-[400] mt-2 relative ml-auto'>
+              <div key={index} className='bg-[#6E00FF] break-normal text-white w-fit px-6 py-2 rounded-[16px] font-[400] mt-2 relative ml-auto'>
                 <p>{message.content}</p>
                 <div className='w-3 h-3 bg-[#6E00FF] absolute rounded-full -right-3'></div>
               </div>

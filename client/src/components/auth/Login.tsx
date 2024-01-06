@@ -1,12 +1,44 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
-import { GrCheckbox, GrCheckboxSelected  } from "react-icons/gr";
+import { useForm } from "react-hook-form";
+import { BsShieldSlash } from "react-icons/bs";
+import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
+import { TfiUser } from "react-icons/tfi";
+import { useAppDispatch } from "@/store/hooks";
+import { login } from "@/features/user/userSlice";
+
+type Formvalues = {
+  username: string;
+  password: string;
+};
 
 function Login({
   updateSide,
 }: {
   updateSide: Dispatch<SetStateAction<boolean>>;
 }) {
+  const form = useForm<Formvalues>();
+  const { register, handleSubmit, formState } = form;
+  const { errors } = formState;
+  const dispatch = useAppDispatch();
+  const onSubmit = async (data: Formvalues) => {
+    try {
+      const res = await fetch('http://localhost:3333/auth/signin',{
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      const user = await res.json();
+      dispatch(login(user));
+      console.log(user)
+    }catch(e: any){
+      console.log(e.message);
+    }
+  };
+
   return (
     <div className="w-1/2 h-full flex justify-center items-center text-[#09090B]">
       <div className="flex flex-col items-center  gap-2">
@@ -18,11 +50,23 @@ function Login({
         </div>
         <div className="w-full flex justify-between font-[400] text-xl my-2">
           <button className="w-[180px] h-[55px] rounded-[16px] border border-[#6f00ff72] flex items-center justify-center gap-2 ">
-            <Image className="w-auto h-auto" src={"/google.png"} alt="icon" width={20} height={20} />
+            <Image
+              className="w-auto h-auto"
+              src={"/google.png"}
+              alt="icon"
+              width={20}
+              height={20}
+            />
             <p>Google</p>
           </button>
           <button className="w-[180px] h-[55px] rounded-[16px] border border-[#6f00ff72] flex items-center justify-center gap-2">
-            <Image className="w-auto h-auto" src={"/facebook.png"} alt="icon" width={24} height={24} />
+            <Image
+              className="w-auto h-auto"
+              src={"/facebook.png"}
+              alt="icon"
+              width={24}
+              height={24}
+            />
             <p>Facebook</p>
           </button>
         </div>
@@ -31,41 +75,63 @@ function Login({
           <p className="text-[#71717A] text-[12px]">or continue with email</p>
           <span className="h-[0.5px] w-[110px] bg-[#71717A]"></span>
         </div>
-        <form className="flex flex-col w-[90%] gap-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col w-[90%] gap-6"
+        >
           <div className="relative">
             <input
-              className="bg-[#6f00ff27] pl-12 placeholder:text-[#6f00ff4b] border border-[#6E00FF] outline-none w-full h-[55px] rounded-xl"
+              className={`bg-[#6f00ff27] pl-12  border ${
+                errors.username
+                  ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
+                  : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
+              } outline-none w-full h-[55px] rounded-xl`}
               type="text"
               placeholder="Username"
+              {...register("username", {
+                required: "this field is required",
+              })}
             />
-            <Image
-              className="absolute top-4 left-3"
-              src={"/username.png"}
-              alt=""
-              width={23}
-              height={23}
+            <TfiUser
+              className={`absolute top-[18px] left-4 text-xl ${
+                errors.username ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+              }`}
             />
+            <p className="absolute text-sm right-1 text-[#ff2c2c]">
+              {errors.username?.message}
+            </p>
           </div>
           <div className="relative">
             <input
-              className="bg-[#6f00ff27] pl-12 placeholder:text-[#6f00ff4b] border border-[#6E00FF] outline-none w-full h-[55px] rounded-xl"
+              className={`bg-[#6f00ff27] pl-12  border ${
+                errors.password
+                  ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
+                  : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
+              } outline-none w-full h-[55px] rounded-xl`}
               placeholder="Password"
               type="password"
+              {...register("password", {
+                required: "this field is required",
+              })}
             ></input>
-            <Image
-              className="absolute top-4 left-3 w-auto h-auto"
-              src={"pass.svg"}
-              alt=""
-              width={23}
-              height={23}
+            <BsShieldSlash
+              className={`absolute top-[16px] left-3 text-2xl ${
+                errors.password ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+              }`}
             />
+            <p className="absolute text-sm right-1 text-[#ff2c2c]">
+              {errors.password?.message}
+            </p>
           </div>
           <div className="flex items-center gap-2">
             <GrCheckbox className="text-xl text-[#6f00ff]" />
             <p className="text-[#71717A] font-light">Remember me</p>
             <p className="ml-auto font-bold text-[#6f00ff]">Forgot Password?</p>
           </div>
-          <button className="w-[full text-white font-bold text-xl h-[55px] rounded-xl bg-[#6f00ff]">
+          <button
+            type="submit"
+            className="w-[full text-white font-bold text-xl h-[55px] rounded-xl bg-[#6f00ff]"
+          >
             Log In
           </button>
           <p className="text-[#71717A] self-center">

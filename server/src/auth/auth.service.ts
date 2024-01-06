@@ -54,16 +54,16 @@ export class AuthService {
           username: dto.username,
         },
       });
-
-      const match = await bcrypt.compare(dto.password, user.password);
-      delete user.password;
+      const match = await bcrypt.compare(dto.password,user.password);
+      // delete user.password;
       if (!match) throw new UnauthorizedException('Password incorrect!');
       const jwt = await this.signToken(user.id, user.username);
-      res.cookie('jwt', jwt, {
+      res.cookie('jwt', jwt, { 
         httpOnly: true,
       });
+      console.log(user);
       delete user.password;
-      return jwt;
+      return user;
     } catch (e) {
       throw new UnauthorizedException(e.message);
     }

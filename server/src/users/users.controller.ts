@@ -10,6 +10,6 @@ export class UsersController {
 
   @Get()
   async getUser(@Req() req: Request) {
-    return this.userService.findUser(req);
+    return this.userService.findUser(req); 
   }
 }

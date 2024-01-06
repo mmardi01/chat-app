@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "../components/NavBar";
 import ActivePageContext from "@/context/activePageContext";
 import StoreProvider from "@/store/StoreProvider";
+import RouteProtection from "@/components/RouteProtection";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,8 +25,9 @@ export default function RootLayout({
         <div className="flex w-full h-[100vh] justify-between items-center gap-6 p-6">
           <ActivePageContext>
             <StoreProvider>
-              {/* <NavBar /> */}
-              {children}
+              <RouteProtection>
+                {children}
+              </RouteProtection>
             </StoreProvider>
           </ActivePageContext>
         </div>
