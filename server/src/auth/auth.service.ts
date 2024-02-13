@@ -42,8 +42,11 @@ export class AuthService {
       });
 
       return userCreated;
-    } catch (e) {
-      throw new ForbiddenException(e.message);
+    } catch (e) { 
+      console.log(e.code);
+      if (e.code == 23505)
+        throw new ForbiddenException('Username already exists');
+      throw new ForbiddenException('error');
     }
   }
 
@@ -55,13 +58,11 @@ export class AuthService {
         },
       });
       const match = await bcrypt.compare(dto.password,user.password);
-      // delete user.password;
       if (!match) throw new UnauthorizedException('Password incorrect!');
       const jwt = await this.signToken(user.id, user.username);
       res.cookie('jwt', jwt, { 
         httpOnly: true,
       });
-      console.log(user);
       delete user.password;
       return user;
     } catch (e) {

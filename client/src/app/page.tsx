@@ -9,7 +9,6 @@ export default function Home() {
   const active = useContext(activeContext);
   useEffect(() => {
     active?.setActivePage("home");
-    console.log(user);
   }, []);
 
   return (

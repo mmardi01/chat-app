@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsShieldSlash } from "react-icons/bs";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
 import { TfiUser } from "react-icons/tfi";
 import { useAppDispatch } from "@/store/hooks";
 import { login } from "@/features/user/userSlice";
+import { useRouter } from "next/navigation";
 
 type Formvalues = {
   username: string;
@@ -20,9 +21,11 @@ function Login({
   const form = useForm<Formvalues>();
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
+  const router = useRouter();
+  const [ credentialsError, setCredentialsError ] =  useState('');
   const dispatch = useAppDispatch();
   const onSubmit = async (data: Formvalues) => {
-    try {
+    setCredentialsError('')
       const res = await fetch('http://localhost:3333/auth/signin',{
         method: "POST",
         credentials: "include",
@@ -31,12 +34,13 @@ function Login({
           "Content-Type": "application/json",
         },
       })
-      const user = await res.json();
-      dispatch(login(user));
-      console.log(user)
-    }catch(e: any){
-      console.log(e.message);
-    }
+      if (res.ok) {
+        const userData = await res.json();
+        dispatch(login(userData));
+        router.push('/')
+      }
+      else 
+        setCredentialsError('Username or Password is incorrect!');
   };
 
   return (
@@ -123,6 +127,9 @@ function Login({
               {errors.password?.message}
             </p>
           </div>
+          <p className="text-sm text-[#ff2c2c]">
+              {credentialsError}
+          </p>
           <div className="flex items-center gap-2">
             <GrCheckbox className="text-xl text-[#6f00ff]" />
             <p className="text-[#71717A] font-light">Remember me</p>

@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form";
 import { TfiUser } from "react-icons/tfi";
 import { CiMail } from "react-icons/ci";
 import { BsShieldSlash } from "react-icons/bs";
-import {  useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "@/features/user/userSlice";
+import { useRouter } from "next/navigation";
 
 type Formvalues = {
   username: string;
@@ -20,31 +21,32 @@ function Signup({
   updateSide: Dispatch<SetStateAction<boolean>>;
 }) {
   const form = useForm<Formvalues>();
-  const { register,  handleSubmit, formState } = form;
+  const { register, handleSubmit, formState } = form;
   const { errors } = formState;
-  const [usernameError, setUsernameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const router = useRouter();
   const dispatch = useDispatch();
 
 
+
   const onSubmit = async (data: Formvalues) => {
-    try {
-      const res = await fetch("http://localhost:3333/auth/signup", {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const res = await fetch("http://localhost:3333/auth/signup", {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
       const userData = await res.json();
       dispatch(login(userData));
-      console.log(userData);
-    } catch (error) {
-      console.log(error);
+      router.push('/')
     }
+    else{
+      const user = await res.json();
+      console.log(user)
+    }
+      // setCredentialsError();
   };
 
   return (
@@ -91,11 +93,10 @@ function Signup({
           <div className="relative">
             <input
               id="username"
-              className={`bg-[#6f00ff27] pl-12  border ${
-                errors.username
+              className={`bg-[#6f00ff27] pl-12  border ${errors.username
                   ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
                   : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
-              } outline-none w-full h-[55px] rounded-xl`}
+                } outline-none w-full h-[55px] rounded-xl`}
               type="text"
               placeholder="Username"
               {...register("username", {
@@ -111,9 +112,8 @@ function Signup({
               })}
             />
             <TfiUser
-              className={`absolute top-[18px] left-4 text-xl ${
-                errors.username ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
-              }`}
+              className={`absolute top-[18px] left-4 text-xl ${errors.username ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+                }`}
             />
             <p className="absolute text-sm right-1 text-[#ff2c2c]">
               {errors.username?.message}
@@ -122,11 +122,10 @@ function Signup({
           <div className="relative">
             <input
               id="email"
-              className={`bg-[#6f00ff27] pl-12  border ${
-                errors.email
+              className={`bg-[#6f00ff27] pl-12  border ${errors.email
                   ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
                   : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
-              } outline-none w-full h-[55px] rounded-xl`}
+                } outline-none w-full h-[55px] rounded-xl`}
               type="text"
               placeholder="Email"
               {...register("email", {
@@ -138,9 +137,8 @@ function Signup({
               })}
             />
             <CiMail
-              className={`absolute top-[16px] left-4 text-2xl ${
-                errors.email ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
-              }`}
+              className={`absolute top-[16px] left-4 text-2xl ${errors.email ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+                }`}
             />
             <p className="absolute text-sm right-1 text-[#ff2c2c]">
               {errors.email?.message}
@@ -149,11 +147,10 @@ function Signup({
           <div className="relative">
             <input
               id="password"
-              className={`bg-[#6f00ff27] pl-12  border ${
-                errors.password
+              className={`bg-[#6f00ff27] pl-12  border ${errors.password
                   ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
                   : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
-              } outline-none w-full h-[55px] rounded-xl`}
+                } outline-none w-full h-[55px] rounded-xl`}
               placeholder="Password"
               type="password"
               {...register("password", {
@@ -169,9 +166,8 @@ function Signup({
               })}
             ></input>
             <BsShieldSlash
-              className={`absolute top-[16px] left-4 text-2xl ${
-                errors.password ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
-              }`}
+              className={`absolute top-[16px] left-4 text-2xl ${errors.password ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+                }`}
             />
             <p className="absolute text-sm right-1 text-[#ff2c2c]">
               {errors.password?.message}
@@ -180,11 +176,10 @@ function Signup({
           <div className="relative">
             <input
               id="confirm"
-              className={`bg-[#6f00ff27] pl-12  border ${
-                errors.confirmPassword
+              className={`bg-[#6f00ff27] pl-12  border ${errors.confirmPassword
                   ? "border-[#ff2c2c] placeholder:text-[#ff2c2c]"
                   : "border-[#6E00FF] placeholder:text-[#6f00ff4b]"
-              } outline-none w-full h-[55px] rounded-xl`}
+                } outline-none w-full h-[55px] rounded-xl`}
               placeholder="Confirm Password"
               type="password"
               {...register("confirmPassword", {
@@ -196,9 +191,8 @@ function Signup({
             </p>
 
             <BsShieldSlash
-              className={`absolute top-[16px] left-4 text-2xl ${
-                errors.confirmPassword ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
-              }`}
+              className={`absolute top-[16px] left-4 text-2xl ${errors.confirmPassword ? "text-[#ff2c2c]" : "text-[#6f00ff4b]"
+                }`}
             />
           </div>
           <button

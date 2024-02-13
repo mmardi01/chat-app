@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavBar from "../components/NavBar";
 import ActivePageContext from "@/context/activePageContext";
 import StoreProvider from "@/store/StoreProvider";
 import RouteProtection from "@/components/RouteProtection";

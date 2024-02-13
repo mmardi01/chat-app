@@ -27,9 +27,9 @@ export default function RouteProtection({
   }
 
   useEffect(() => { 
-    console.log('hereee')
+    console.log('im here')
     getUser()
-  },[children])
+  },[])
 
   return (
     <>
