@@ -4,7 +4,7 @@ import "./globals.css";
 import ActivePageContext from "@/context/activePageContext";
 import StoreProvider from "@/store/StoreProvider";
 import RouteProtection from "@/components/RouteProtection";
-
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +18,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#EFF6FC]`}>

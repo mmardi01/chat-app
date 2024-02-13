@@ -52,7 +52,7 @@ function Login({
             Welcome back! Select method to log in:
           </p>
         </div>
-        <div className="w-full flex justify-between font-[400] text-xl my-2">
+        <div className="w-full flex font-[400] text-xl my-2 gap-2">
           <button className="w-[180px] h-[55px] rounded-[16px] border border-[#6f00ff72] flex items-center justify-center gap-2 ">
             <Image
               className="w-auto h-auto"

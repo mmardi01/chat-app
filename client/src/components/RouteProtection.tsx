@@ -1,15 +1,18 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import NavBar from './NavBar';
 import { useAppSelector,useAppDispatch } from '@/store/hooks';
 import { useRouter } from 'next/navigation';
 import { login, logout } from '@/features/user/userSlice';
+import { activeContext } from '@/context/activePageContext';
 
 export default function RouteProtection({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const active = useContext(activeContext);
+
   const router = useRouter();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user);
@@ -27,9 +30,8 @@ export default function RouteProtection({
   }
 
   useEffect(() => { 
-    console.log('im here')
     getUser()
-  },[])
+  },[active?.activePage])
 
   return (
     <>
