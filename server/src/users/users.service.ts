@@ -19,7 +19,6 @@ export class UsersService {
           id: id,
         },
       });
-
       delete (await user).password;
       return user;
     } catch (error) {
@@ -57,4 +56,6 @@ export class UsersService {
       throw new NotFoundException(e.message);
     }
   }
+
+  
 }
