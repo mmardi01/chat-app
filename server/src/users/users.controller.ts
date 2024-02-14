@@ -10,7 +10,7 @@ export class UsersController {
 
   @Get()
   async getUser(@Req() req: Request) {
-    return this.userService.getUser(req['user'].id); 
+    return this.userService.getUser(req['user'].id);
   }
 
   @Get('profile')
@@ -21,5 +21,10 @@ export class UsersController {
   @Get('all')
   async findAll() {
     return this.userService.getAll();
+  }
+
+  @Get('search')
+  async searchForUser(@Query('username') username: string) {
+    return this.userService.search(username);
   }
 }

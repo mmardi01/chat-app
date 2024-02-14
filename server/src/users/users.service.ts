@@ -1,8 +1,12 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/User';
 import { Repository } from 'typeorm';
-import { Request } from 'express';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +16,7 @@ export class UsersService {
     try {
       const user = this.userRepo.findOne({
         where: {
-          id: id
+          id: id,
         },
       });
 
@@ -27,16 +31,30 @@ export class UsersService {
     try {
       const users = this.userRepo.find({
         select: {
-          'id':true,
-          'username':true,
-          'email':true,
-          'image':true,
-        }
+          id: true,
+          username: true,
+          email: true,
+          image: true,
+        },
       });
       return users;
-    }
-    catch(e){
+    } catch (e) {
       throw new ForbiddenException();
+    }
+  }
+
+  async search(username: string) {
+    try {
+      if (!username.length) return [];
+
+      const users = this.userRepo.find();
+
+      const res = (await users).filter((user) =>
+        user.username.startsWith(username),
+      );
+      return res;
+    } catch (e) {
+      throw new NotFoundException(e.message);
     }
   }
 }
