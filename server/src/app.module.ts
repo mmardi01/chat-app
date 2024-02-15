@@ -4,6 +4,7 @@ import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { Room } from './typeorm/entities/Room';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { ConfigModule } from '@nestjs/config';
       username: 'postgres',
       password: '1234',
       database: 'chat',
-      entities: [User],
+      entities: [User, Room],
       synchronize: true,
     }),
     ConfigModule.forRoot({

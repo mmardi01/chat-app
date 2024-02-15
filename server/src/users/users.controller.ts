@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  Post,
   Put,
   Query,
   Req,
@@ -11,7 +10,13 @@ import {
 import { UsersService } from './users.service';
 import { AuthGuard } from 'src/auth/Guards/AuthGuard';
 import { Request } from 'express';
-import { updateDto } from './dto/dto';
+
+type UpdateData = {
+  username?: string;
+  email?: string;
+  image?: string;
+  password?: string;
+};
 
 @UseGuards(AuthGuard)
 @Controller('user')
@@ -20,7 +25,7 @@ export class UsersController {
 
   @Get()
   async getUser(@Req() req: Request) {
-    return this.userService.getUser(req['user'].id);
+    return this.userService.getUser(req['user'].sub);
   }
 
   @Get('profile')
@@ -34,8 +39,8 @@ export class UsersController {
   }
 
   @Put('update')
-  async update(@Req() req: Request, @Body() data: updateDto) {
-    
+  async update(@Req() req: Request, @Body() data: UpdateData) {
+    return this.userService.update(req['user'].sub, data);
   }
 
   @Get('search')

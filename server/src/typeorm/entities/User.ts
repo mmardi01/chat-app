@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Room } from './Room';
 
 @Entity({ name: 'users' })
 export class User {
@@ -19,4 +20,7 @@ export class User {
 
   @Column({ default: new Date() })
   createdAt: Date;
+
+  @ManyToMany(() => Room, (room) => room.members)
+  rooms: Room[]
 }
