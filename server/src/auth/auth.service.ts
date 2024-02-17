@@ -52,7 +52,7 @@ export class AuthService {
 
   async signin(dto: SigninDto, res: Response) {
     try {
-      const user = await this.userRepo.findOne({
+      const user = await this.userRepo.findOneOrFail({
         where: {
           username: dto.username,
         },
@@ -66,7 +66,7 @@ export class AuthService {
       delete user.password;
       return user;
     } catch (e) {
-      throw new UnauthorizedException(e.message);
+      throw new UnauthorizedException('Username or password is incorrect');
     }
   }
 
