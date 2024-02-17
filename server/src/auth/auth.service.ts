@@ -43,7 +43,6 @@ export class AuthService {
 
       return userCreated;
     } catch (e) { 
-      console.log(e.code);
       if (e.code == 23505)
         throw new ForbiddenException('Username already exists');
       throw new ForbiddenException('error');

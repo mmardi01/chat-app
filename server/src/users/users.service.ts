@@ -2,10 +2,13 @@ import {
   ForbiddenException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/User';
 import { Repository } from 'typeorm';
+import { PasswordDto } from './dto/passwordDto';
+import * as bcrypt from 'bcrypt';
 
 type UpdateData = {
   username?: string;
@@ -74,12 +77,38 @@ export class UsersService {
         {
           username: data.username ? data.username : user.username,
           email: data.email ? data.email : user.email,
-          image: data.image ? data.image : user.image
+          image: data.image ? data.image : user.image,
         },
       );
       return updatedUser;
     } catch (e) {
       throw new ForbiddenException(e.message);
+    }
+  }
+
+  async updatePassword(userId: string, data: PasswordDto) {
+    try {
+      const user = await this.userRepo.findOne({
+        where: {
+          id: userId,
+        },
+      });
+      const match = await bcrypt.compare(data.currentPassword, user.password);
+      if (!match)
+        throw new UnauthorizedException('current password is incorrect!');
+      if (data.newPassword !== data.confirmPassword)
+        throw new UnauthorizedException('does not match password');
+      const password = await bcrypt.hash(data.newPassword,10);
+      await this.userRepo.update({
+        id:userId
+      },
+      {
+        password: password
+      }
+      )
+      return user;
+    } catch (e) {
+      throw new UnauthorizedException(e.message);
     }
   }
 }

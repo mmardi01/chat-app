@@ -10,6 +10,7 @@ import {
 import { UsersService } from './users.service';
 import { AuthGuard } from 'src/auth/Guards/AuthGuard';
 import { Request } from 'express';
+import { PasswordDto } from './dto/passwordDto';
 
 type UpdateData = {
   username?: string;
@@ -46,5 +47,10 @@ export class UsersController {
   @Get('search')
   async searchForUser(@Query('username') username: string) {
     return this.userService.search(username);
+  }
+
+  @Put('updatepassword')
+  async updatePassword(@Req() req: Request, @Body() data: PasswordDto) {
+    return this.userService.updatePassword(req['user'].sub, data);
   }
 }
