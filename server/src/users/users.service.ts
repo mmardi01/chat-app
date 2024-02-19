@@ -77,7 +77,6 @@ export class UsersService {
         {
           username: data.username ? data.username : user.username,
           email: data.email ? data.email : user.email,
-          image: data.image ? data.image : user.image,
         },
       );
       return updatedUser;
@@ -98,17 +97,32 @@ export class UsersService {
         throw new UnauthorizedException('current password is incorrect!');
       if (data.newPassword !== data.confirmPassword)
         throw new UnauthorizedException('does not match password');
-      const password = await bcrypt.hash(data.newPassword,10);
-      await this.userRepo.update({
-        id:userId
-      },
-      {
-        password: password
-      }
-      )
+      const password = await bcrypt.hash(data.newPassword, 10);
+      await this.userRepo.update(
+        {
+          id: userId,
+        },
+        {
+          password: password,
+        },
+      );
       return user;
     } catch (e) {
       throw new UnauthorizedException(e.message);
+    }
+  }
+
+  async updatePicture(userId: string,image: Express.Multer.File) {
+    try {
+      const user = this.userRepo.update({
+        id: userId
+      },
+      {
+        image: image.filename
+      }
+      )
+    } catch (error) {
+      // throw new Exce
     }
   }
 }

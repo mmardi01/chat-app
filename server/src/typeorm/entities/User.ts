@@ -16,7 +16,7 @@ export class User {
   password: string;
 
   @Column()
-  image: string;
+  image?: string;
 
   @Column({ default: new Date() })
   createdAt: Date;

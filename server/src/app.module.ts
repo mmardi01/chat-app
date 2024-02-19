@@ -24,6 +24,7 @@ import { Room } from './typeorm/entities/Room';
     }),
     UsersModule,
     AuthModule,
+   
   ],
 })
 export class AppModule {}
