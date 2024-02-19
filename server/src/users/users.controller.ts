@@ -1,20 +1,26 @@
 import {
   Body,
   Controller,
+  FileTypeValidator,
   Get,
+  MaxFileSizeValidator,
+  ParseFilePipe,
   Post,
   Put,
   Query,
   Req,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuard } from 'src/auth/Guards/AuthGuard';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { PasswordDto } from './dto/passwordDto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 
 type UpdateData = {
   username?: string;
@@ -58,8 +64,16 @@ export class UsersController {
 
   @Put('updatepicture')
   @UseInterceptors(FileInterceptor('image'))
-  updatePicture(@Req() req: Request,@UploadedFile() image: Express.Multer.File) {
-    this.updatePicture(req['user'].sub,image)
-    return 'file uploaded';
+  async updatePicture(
+    @Req() req: Request,
+    @UploadedFile(new ParseFilePipe({
+      validators: [
+        new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
+        new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
+      ],
+    }),) image: Express.Multer.File,
+  ) {
+  
+    return await this.userService.updatePicture(req['user'].sub, image);
   }
 }
