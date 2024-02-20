@@ -14,9 +14,6 @@ import { MulterModule } from '@nestjs/platform-express';
     JwtModule.register({
       global: true,
     }),
-    MulterModule.register({
-      dest: './uploads',
-  }),
   ],
 })
 export class UsersModule {}

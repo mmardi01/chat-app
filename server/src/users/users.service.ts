@@ -113,19 +113,20 @@ export class UsersService {
   }
 
   async updatePicture(userId: string, image: Express.Multer.File) {
+    console.log(image.buffer);
     try {
-      const user = await this.userRepo.update(
+      await this.userRepo.update(
         {
           id: userId,
         },
         {
-          image: image.filename,
+          image: '',
         },
       );
-      return 'image uploaded'
+      return 'image uploaded';
     } catch (error) {
+      console.log(error.message);
       throw new ForbiddenException('cannot upload image!');
     }
   }
 }
- 
